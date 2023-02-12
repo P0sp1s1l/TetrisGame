@@ -1,0 +1,44 @@
+@import url(https://fonts.googleapis.com/css?family=Press+Start+2P:regular);
+body{
+text-align: center;
+font-family: 'Press Start 2P';
+background:url("/TetrisGame/res/img/wallpaper.jpg");
+}
+
+
+p{
+
+font-size: 20px;
+background: linear-gradient( rgb(0, 45, 245), rgb(255, 0, 234)); ;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+
+}
+
+
+canvas{
+    position:relative;
+background-color: rgb(36, 36, 36);
+width: 400px;
+height: 800px;
+border: 2px solid;
+border-image: linear-gradient( rgb(0, 45, 245),rgb(255, 0, 234)) 1;
+}
+button{
+    font-family: "Press Start 2P";
+background: linear-gradient( rgb(0, 45, 245), rgb(255, 0, 234)); ;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-color: transparent;
+font-size: 20px;
+position: absolute;
+margin-left: 10px;
+margin-top: 100px;
+border: 0px solid transparent;
+
+}
+button:hover{
+background:linear-gradient(rgb(255,0,234),rgb(0,45,245));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
