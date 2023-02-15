@@ -1,7 +1,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-blockSize=10;
+blockSize = 10;
 let offset = 4;
 
 //declaration of each shape from tetromino
@@ -11,7 +11,7 @@ const tetrominoShape = {
     [1, 1],
   ],
 
-  T: [ 
+  T: [
     [0, 1, 0],
     [0, 1, 0],
     [0, 1, 0],
@@ -84,22 +84,46 @@ function colorizeTetromino(shape) {
       ctx.fillStyle = "green";
       break;
   }
-
-
-  tetrominoShape[shape].forEach(([x, y]) => {
-    ctx.fillRect((x*blockSize), (y*blockSize), blockSize, blockSize);
-  });
 }
+class DrawTetromino {
+  constructor(x, y, shape) {
+    this.x = x;
+    this.y = y;
+    this.shape = shape;
+  }
 
-//Time interval so tetromino can fall 
-function update(time = 0) { 
-  colorizeTetromino("O");
-  requestAnimationFrame(update);
-  console.log(time);
-  let fall = time;
-  time += offset;
-  if(time>0){
-   console.log("successfull");
+  fall() {
+    this.y += 1;
+    this.draw();
+    setTimeout(() => {
+      this.fall();
+    }, 1000);
+  }
+
+  draw() {
+    this.shape.forEach((row, rowIndex) => {
+      row.forEach((cell, columnIndex) => {
+        if (cell === 1) {
+          const shapeX = this.x + columnIndex;
+          const shapeY = this.y + rowIndex;
+
+          ctx.fillRect(
+            shapeX * blockSize,
+            shapeY * blockSize,
+            blockSize,
+            blockSize
+          );
+        }
+      });
+    });
+  }
 }
-}
+const testing = new DrawTetromino(5, 5, []);
+const typesOfTetromino = Object.keys(tetrominoShape);
+const randomizer =
+  typesOfTetromino[Math.floor(Math.random() * typesOfTetromino.length)];
+tetrominoShape[randomizer].forEach((row) => {
+  testing.shape.push([...row]);
+});
+testing.fall();
 update();
