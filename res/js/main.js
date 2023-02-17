@@ -7,6 +7,14 @@ canvas.height = 800; //height of canvas
 //Tetris problematic/logic
 
 //start button
+const start = document.getElementById('start');
+start.onclick = function(){
+soundtrack.play();
+    //print function fall, from constructor, to website
+    run.fall();
+
+
+}
 
 //restart button
 const restart = document.getElementById("restart");
@@ -235,5 +243,5 @@ tetrominoShape[randomizer].forEach((row) => {
   run.shape.push([...row]);
 });
 
-//print function fall, from constructor, to website
-run.fall();
+
+
