@@ -14,6 +14,29 @@ restart.onclick = (event) => {
   location.reload();
 };
 
+//soundtrack button
+const soundtrack = document.getElementById("sound"); //get sound from index.html
+const playButton = document.getElementById("play"); //get play from index.html
+
+//click on "speaker" button and it starts to make a sound
+playButton.onclick = function () {
+  
+  //if you pause the sound, the background will change
+  if (soundtrack.paused) {
+    soundtrack.play();
+    playButton.style.background =
+      "url('/TetrisGame/res/img/imageOfButton.png') no-repeat";
+    playButton.style.backgroundSize = "80px";
+  } 
+  
+  else {
+    soundtrack.pause();
+    playButton.style.background =
+      "url('/TetrisGame/res/img/imageOfButtonHover.png') no-repeat";
+    playButton.style.backgroundSize = "80px";
+  }
+};
+
 //size of 1 cell
 cellSize = 15;
 

@@ -11,10 +11,10 @@ p {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-#score{
-position: relative;
-    margin-left: 600px;
-    margin-top: -770px;
+#score {
+  position: relative;
+  margin-left: 600px;
+  margin-top: -770px;
 }
 canvas {
   position: relative;
@@ -54,4 +54,23 @@ canvas {
   background: linear-gradient(rgb(255, 0, 234), rgb(0, 45, 245));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+#play {
+  width: 80px;
+  height: 80px;
+  background: url("/TetrisGame/res/img/imageOfButton.png");
+  background-repeat: no-repeat;
+  background-size: 80px;
+  font-size: 2px;
+  position: absolute;
+  margin-left: -502px;
+  margin-top: 740px;
+  border: 0px solid transparent;
+}
+
+#play:hover {
+  background: url("/TetrisGame/res/img/imageOfButtonHover.png");
+  background-repeat: no-repeat;
+  background-size: 80px;
 }
