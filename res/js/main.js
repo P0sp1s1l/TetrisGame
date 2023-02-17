@@ -7,14 +7,12 @@ canvas.height = 800; //height of canvas
 //Tetris problematic/logic
 
 //start button
-const start = document.getElementById('start');
-start.onclick = function(){
-soundtrack.play();
-    //print function fall, from constructor, to website
-    run.fall();
-
-
-}
+const start = document.getElementById("start");
+start.onclick = function () {
+  soundtrack.play();
+  //print function fall, from constructor, to website
+  run.fall();
+};
 
 //restart button
 const restart = document.getElementById("restart");
@@ -28,7 +26,7 @@ const playButton = document.getElementById("play"); //get play from index.html
 
 //click on "speaker" button and it starts to make a sound
 playButton.onclick = function () {
-  
+
   //if you pause the sound, the background will change
   if (soundtrack.paused) {
     soundtrack.play();
@@ -237,11 +235,7 @@ const run = new DrawTetromino(12, -1, []);
 //gets ID´s from tetrominoShape
 const typesOfTetromino = Object.keys(tetrominoShape);
 //randomize tetromino types
-const randomizer =
-  typesOfTetromino[Math.floor(Math.random() * typesOfTetromino.length)];
+const randomizer = typesOfTetromino[Math.floor(Math.random() * typesOfTetromino.length)];
 tetrominoShape[randomizer].forEach((row) => {
   run.shape.push([...row]);
 });
-
-
-
