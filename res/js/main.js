@@ -24,15 +24,16 @@ let speedOftetromino = 1000;
 const tetrominoShape = {
   //O
   O: [
-    [1, 1],
-    [1, 1],
+    [1, 1, 0],
+    [1, 1, 0],
+    [0, 0, 0],
   ],
 
   //T
   T: [
-    [0, 0, 0],
     [2, 2, 2],
     [0, 2, 0],
+    [0, 0, 0],
   ],
 
   //I
@@ -72,7 +73,6 @@ const tetrominoShape = {
   ],
 };
 
-
 //creates object with function fall and draw.
 class DrawTetromino {
   constructor(x, y, shape, canvas) {
@@ -82,10 +82,33 @@ class DrawTetromino {
     this.canvas = canvas;
   }
 
+  //checks input of keys
+  Arrows(event) {
+    //left
+    if (event.keyCode === 37) {
+      this.x -= 1;
+      this.draw();
+    }
+
+    //right
+    if (event.keyCode === 39) {
+      this.x += 1;
+      this.draw();
+    }
+
+    //down
+    if (event.keyCode === 40) {
+      this.y += 1;
+      this.draw();
+    }
+  }
+
   //makes the tetromino fall
   fall() {
     this.y += 1;
     this.draw();
+
+    //sets timeOut and interval for falling
     setTimeout(() => {
       this.fall();
     }, speedOftetromino);
@@ -93,6 +116,7 @@ class DrawTetromino {
 
   //draws each type of tetromino
   draw() {
+    document.addEventListener("keydown", (event) => this.Arrows(event));
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     this.shape.forEach((row, rowIndex) => {
       row.forEach((cell, columnIndex) => {
@@ -178,7 +202,7 @@ class DrawTetromino {
   }
 }
 //creates tetromino object
-const run = new DrawTetromino(8, 0, []);
+const run = new DrawTetromino(12, -1, []);
 //gets ID´s from tetrominoShape
 const typesOfTetromino = Object.keys(tetrominoShape);
 //randomize tetromino types
