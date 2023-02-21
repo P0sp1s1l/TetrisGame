@@ -98,7 +98,6 @@ const tetrominoShape = {
     [0, 0, 0],
   ],
 };
-
 //creates object with function fall and draw.
 class DrawTetromino {
   constructor(x, y, shape, canvas) {
@@ -108,48 +107,78 @@ class DrawTetromino {
     this.canvas = canvas;
   }
 
+  //method that contorls if button is clicked or released
+  ArrowDown = false;
+
   //checks input of keys
   Arrows(event) {
-    if (event.type == "keydown") {
-      switch (event.keyCode) {
-        //left
-        case 37:
+    switch (event.keyCode) {
+      //left
+      case 37:
+        if (!this.ArrowDown && event.type === "keydown") {
           this.left();
           console.log(this.x);
           this.draw();
-          break;
+          this.ArrowDown = true;
+        }
 
-        //right
-        case 39:
+        if (this.ArrowDown && event.type === "keyup") {
+          this.ArrowDown = false;
+        }
+        break;
+
+      //right
+      case 39:
+        if (!this.ArrowDown && event.type === "keydown") {
           this.right();
           console.log(this.x);
           this.draw();
-          break;
+          this.ArrowDown = true;
+        }
 
-        //down
-        case 40:
-          this.fall();
+        if (this.ArrowDown && event.type === "keyup") {
+          this.ArrowDown = false;
+        }
+        break;
+
+      //down
+      case 40:
+        if (!this.ArrowDown && event.type === "keydown") {
+          this.down();
           console.log(this.y);
           this.draw();
-          break;
-      }
-    }
-    if (event.type == "keyup") {
-      console.log("not triggered");
+          this.ArrowDown = true;
+        }
+
+        if (this.ArrowDown && event.type === "keyup") {
+          this.ArrowDown = false;
+        }
+        break;
     }
   }
+
+  //functions for each arrow key
+
+  //left arrow key
   left() {
     this.x -= 1;
     this.draw();
   }
+  //right arrow key
   right() {
     this.x += 1;
     this.draw();
   }
 
+  //down arrow key
+  down() {
+    this.y += 1;
+    this.draw();
+  }
+
   //makes the tetromino fall
   fall() {
-    this.y += 1;
+    this.down();
     console.log(this.y);
     this.draw();
 
@@ -161,15 +190,22 @@ class DrawTetromino {
 
   //draws each type of tetromino
   draw() {
+    //event for detection when the key is down.
     document.addEventListener("keydown", (event) => this.Arrows(event));
+
+    //event for detection when the key is up.
     document.addEventListener("keyup", (event) => this.Arrows(event));
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     this.shape.forEach((row, rowIndex) => {
       row.forEach((cell, columnIndex) => {
+        //square
         if (cell === 1) {
           ctx.fillStyle = "orange";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
+
+          //fills the cells by x and y position 
           ctx.fillRect(
             shapeX * cellSize,
             shapeY * cellSize,
@@ -177,6 +213,8 @@ class DrawTetromino {
             cellSize
           );
         }
+
+        //T
         if (cell === 2) {
           ctx.fillStyle = "purple";
           const shapeX = this.x + columnIndex;
@@ -188,6 +226,8 @@ class DrawTetromino {
             cellSize
           );
         }
+
+        //I
         if (cell === 3) {
           ctx.fillStyle = "cyan";
           const shapeX = this.x + columnIndex;
@@ -199,6 +239,8 @@ class DrawTetromino {
             cellSize
           );
         }
+
+        //J
         if (cell === 4) {
           ctx.fillStyle = "red";
           const shapeX = this.x + columnIndex;
@@ -210,6 +252,8 @@ class DrawTetromino {
             cellSize
           );
         }
+
+        //L
         if (cell === 5) {
           ctx.fillStyle = "blue";
           const shapeX = this.x + columnIndex;
@@ -221,6 +265,8 @@ class DrawTetromino {
             cellSize
           );
         }
+
+        //S
         if (cell === 6) {
           ctx.fillStyle = "yellow";
           const shapeX = this.x + columnIndex;
@@ -232,6 +278,8 @@ class DrawTetromino {
             cellSize
           );
         }
+
+        //Z
         if (cell === 7) {
           ctx.fillStyle = "green";
           const shapeX = this.x + columnIndex;
