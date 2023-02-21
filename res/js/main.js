@@ -113,46 +113,43 @@ class DrawTetromino {
     if (event.type == "keydown") {
       switch (event.keyCode) {
         //left
-        case 37: {
+        case 37:
           this.left();
           console.log(this.x);
           this.draw();
           break;
-        }
-      
+
         //right
-        case 39: {
+        case 39:
           this.right();
           console.log(this.x);
           this.draw();
           break;
-        }
 
         //down
-        case 40: {
+        case 40:
           this.fall();
           console.log(this.y);
           this.draw();
           break;
-        }
       }
     }
     if (event.type == "keyup") {
-      console.log('not triggered');
+      console.log("not triggered");
     }
   }
   left() {
-    this.x -= (1)/speedOftetromino;
+    this.x -= 1;
     this.draw();
   }
   right() {
-    this.x += (1)/speedOftetromino;
+    this.x += 1;
     this.draw();
   }
 
   //makes the tetromino fall
   fall() {
-    this.y += (1)/speedOftetromino;
+    this.y += 1;
     console.log(this.y);
     this.draw();
 
