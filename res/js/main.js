@@ -26,16 +26,13 @@ const playButton = document.getElementById("play"); //get play from index.html
 
 //click on "speaker" button and it starts to make a sound
 playButton.onclick = function () {
-
   //if you pause the sound, the background will change
   if (soundtrack.paused) {
     soundtrack.play();
     playButton.style.background =
       "url('/TetrisGame/res/img/imageOfButton.png') no-repeat";
     playButton.style.backgroundSize = "80px";
-  } 
-  
-  else {
+  } else {
     soundtrack.pause();
     playButton.style.background =
       "url('/TetrisGame/res/img/imageOfButtonHover.png') no-repeat";
@@ -113,28 +110,50 @@ class DrawTetromino {
 
   //checks input of keys
   Arrows(event) {
-    //left
-    if (event.keyCode === 37) {
-      this.x -= 1;
-      this.draw();
-    }
+    if (event.type == "keydown") {
+      switch (event.keyCode) {
+        //left
+        case 37: {
+          this.left();
+          console.log(this.x);
+          this.draw();
+          break;
+        }
+      
+        //right
+        case 39: {
+          this.right();
+          console.log(this.x);
+          this.draw();
+          break;
+        }
 
-    //right
-    if (event.keyCode === 39) {
-      this.x += 1;
-      this.draw();
+        //down
+        case 40: {
+          this.fall();
+          console.log(this.y);
+          this.draw();
+          break;
+        }
+      }
     }
-
-    //down
-    if (event.keyCode === 40) {
-      this.y += 1;
-      this.draw();
+    if (event.type == "keyup") {
+      console.log('not triggered');
     }
+  }
+  left() {
+    this.x -= (1)/speedOftetromino;
+    this.draw();
+  }
+  right() {
+    this.x += (1)/speedOftetromino;
+    this.draw();
   }
 
   //makes the tetromino fall
   fall() {
-    this.y += 1;
+    this.y += (1)/speedOftetromino;
+    console.log(this.y);
     this.draw();
 
     //sets timeOut and interval for falling
@@ -146,6 +165,7 @@ class DrawTetromino {
   //draws each type of tetromino
   draw() {
     document.addEventListener("keydown", (event) => this.Arrows(event));
+    document.addEventListener("keyup", (event) => this.Arrows(event));
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     this.shape.forEach((row, rowIndex) => {
       row.forEach((cell, columnIndex) => {
@@ -235,7 +255,8 @@ const run = new DrawTetromino(12, -1, []);
 //gets ID´s from tetrominoShape
 const typesOfTetromino = Object.keys(tetrominoShape);
 //randomize tetromino types
-const randomizer = typesOfTetromino[Math.floor(Math.random() * typesOfTetromino.length)];
+const randomizer =
+  typesOfTetromino[Math.floor(Math.random() * typesOfTetromino.length)];
 tetrominoShape[randomizer].forEach((row) => {
   run.shape.push([...row]);
 });
