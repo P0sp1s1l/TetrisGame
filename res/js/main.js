@@ -29,13 +29,12 @@ playButton.onclick = function () {
   //if you pause the sound, the background will change
   if (soundtrack.paused) {
     soundtrack.play();
-    playButton.style.background =
-      "url('/TetrisGame/res/img/imageOfButton.png') no-repeat";
+    playButton.style.background = "url('./img/imageOfButton.png') no-repeat";
     playButton.style.backgroundSize = "80px";
   } else {
     soundtrack.pause();
     playButton.style.background =
-      "url('/TetrisGame/res/img/imageOfButtonHover.png') no-repeat";
+      "url('./img/imageOfButtonHover.png') no-repeat";
     playButton.style.backgroundSize = "80px";
   }
 };
@@ -190,6 +189,13 @@ class DrawTetromino {
 
   //draws each type of tetromino
   draw() {
+
+    //score
+    let score = document.getElementById("score");
+    if (this.y == 50) {
+      let scoreboard = 100;
+      score.innerText = `SCORE: ${scoreboard}`;
+    }
     //event for detection when the key is down.
     document.addEventListener("keydown", (event) => this.Arrows(event));
 
@@ -205,7 +211,7 @@ class DrawTetromino {
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
 
-          //fills the cells by x and y position 
+          //fills the cells by x and y position
           ctx.fillRect(
             shapeX * cellSize,
             shapeY * cellSize,
@@ -295,8 +301,25 @@ class DrawTetromino {
     });
   }
 }
+
+//prints array of some width and height
+function printArray(width, height) {
+  const board = [];
+
+  //while height is not 0
+  while (height--) {
+    board.push(new Array(width).fill(0));
+  }
+  return board;
+}
+const arena = printArray(12, 20);
+console.log(arena);
+
+//shows as table
+console.table(arena);
+
 //creates tetromino object
-const run = new DrawTetromino(12, -1, []);
+const run = new DrawTetromino(12, 0, []);
 //gets ID´s from tetrominoShape
 const typesOfTetromino = Object.keys(tetrominoShape);
 //randomize tetromino types
