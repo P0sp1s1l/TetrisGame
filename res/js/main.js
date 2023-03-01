@@ -189,7 +189,6 @@ class DrawTetromino {
 
   //draws each type of tetromino
   draw() {
-
     //score
     let score = document.getElementById("score");
     if (this.y == 50) {
@@ -211,6 +210,11 @@ class DrawTetromino {
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
 
+          //write the position and "shape" of tetromino in arena(console)
+          if (cell != 0) {
+            arena[shapeY][shapeX] = cell;
+          }
+
           //fills the cells by x and y position
           ctx.fillRect(
             shapeX * cellSize,
@@ -225,6 +229,9 @@ class DrawTetromino {
           ctx.fillStyle = "purple";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
+          if (cell != 0) {
+            arena[shapeY][shapeX] = cell;
+          }
           ctx.fillRect(
             shapeX * cellSize,
             shapeY * cellSize,
@@ -238,6 +245,9 @@ class DrawTetromino {
           ctx.fillStyle = "cyan";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
+          if (cell != 0) {
+            arena[shapeY][shapeX] = cell;
+          }
           ctx.fillRect(
             shapeX * cellSize,
             shapeY * cellSize,
@@ -251,6 +261,9 @@ class DrawTetromino {
           ctx.fillStyle = "red";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
+          if (cell != 0) {
+            arena[shapeY][shapeX] = cell;
+          }
           ctx.fillRect(
             shapeX * cellSize,
             shapeY * cellSize,
@@ -264,6 +277,9 @@ class DrawTetromino {
           ctx.fillStyle = "blue";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
+          if (cell != 0) {
+            arena[shapeY][shapeX] = cell;
+          }
           ctx.fillRect(
             shapeX * cellSize,
             shapeY * cellSize,
@@ -277,6 +293,9 @@ class DrawTetromino {
           ctx.fillStyle = "yellow";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
+          if (cell != 0) {
+            arena[shapeY][shapeX] = cell;
+          }
           ctx.fillRect(
             shapeX * cellSize,
             shapeY * cellSize,
@@ -290,6 +309,10 @@ class DrawTetromino {
           ctx.fillStyle = "green";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
+          if (cell != 0) {
+            arena[shapeY][shapeX] = cell;
+          }
+
           ctx.fillRect(
             shapeX * cellSize,
             shapeY * cellSize,
@@ -302,7 +325,7 @@ class DrawTetromino {
   }
 }
 
-//prints array of some width and height
+//prints array(in console) of some width and height
 function printArray(width, height) {
   const board = [];
 
@@ -312,11 +335,7 @@ function printArray(width, height) {
   }
   return board;
 }
-const arena = printArray(12, 20);
-console.log(arena);
-
-//shows as table
-console.table(arena);
+let arena = printArray(40, 60);
 
 //creates tetromino object
 const run = new DrawTetromino(12, 0, []);
