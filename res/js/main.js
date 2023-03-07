@@ -177,24 +177,36 @@ class DrawTetromino {
 
   //makes the tetromino fall
   fall() {
+    this.draw();
     this.down();
     console.log(this.y);
-    this.draw();
-
+     this.collisionFall();
+  
     //sets timeOut and interval for falling
     setTimeout(() => {
       this.fall();
     }, speedOftetromino);
   }
 
+  //collisions
+
+  //set y position to zero (resets falling) when its "y">=50
+  collisionFall() {
+    
+   let trueFalse = false;
+    if (this.y >= 10) { 
+      trueFalse = true;
+      this.y = 0;
+      randomize();
+     
+  }
+}
+
   //draws each type of tetromino
   draw() {
     //score
     let score = document.getElementById("score");
-    if (this.y == 50) {
-      let scoreboard = 100;
-      score.innerText = `SCORE: ${scoreboard}`;
-    }
+
     //event for detection when the key is down.
     document.addEventListener("keydown", (event) => this.Arrows(event));
 
@@ -335,15 +347,19 @@ function printArray(width, height) {
   }
   return board;
 }
-let arena = printArray(40, 60);
+
+let arena = printArray(40, 55);
 
 //creates tetromino object
 const run = new DrawTetromino(12, 0, []);
 //gets ID´s from tetrominoShape
 const typesOfTetromino = Object.keys(tetrominoShape);
 //randomize tetromino types
+
+function randomize(){
 const randomizer =
   typesOfTetromino[Math.floor(Math.random() * typesOfTetromino.length)];
 tetrominoShape[randomizer].forEach((row) => {
   run.shape.push([...row]);
 });
+}
