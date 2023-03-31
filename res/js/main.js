@@ -11,7 +11,7 @@ const start = document.getElementById("start");
 start.onclick = function () {
   soundtrack.play();
   //print function fall, from constructor, to website
-  run.fall();
+  drawShape();
 };
 
 //restart button
@@ -180,27 +180,44 @@ class DrawTetromino {
     this.draw();
     this.down();
     console.log(this.y);
-     this.collisionFall();
-  
+    this.collisionFall();
     //sets timeOut and interval for falling
     setTimeout(() => {
       this.fall();
     }, speedOftetromino);
   }
 
-  //collisions
 
-  //set y position to zero (resets falling) when its "y">=50
+  shapesToRedraw = [];
+  redrawShapes() {
+    this.shapesToRedraw.forEach((shapeToRedraw) => {
+      shapeToRedraw;
+    });
+  }
+
+
+  //collisions
   collisionFall() {
-    
-   let trueFalse = false;
-    if (this.y >= 10) { 
-      trueFalse = true;
-      this.y = 0;
-      randomize();
-     
+    let bottom = 50;
+   
+    if (this.y >= (bottom)) { 
+      this.shape.forEach((row, rowIndex) => {
+        row.forEach((cell, columnIndex) => {
+        if (cell=== 3) {
+          bottom = this.y -4 ;
+          this.y = bottom;
+        }
+       else { 
+          this.y = bottom;
+       } 
+        
+        });});
+        
   }
 }
+
+  
+  //set y position to zero (resets falling) when its "y">=50
 
   //draws each type of tetromino
   draw() {
@@ -335,6 +352,123 @@ class DrawTetromino {
       });
     });
   }
+  movedown() {
+    //score
+    let score = document.getElementById("score");
+
+    //event for detection when the key is down.
+    document.addEventListener("keydown", (event) => this.Arrows(event));
+
+    //event for detection when the key is up.
+    document.addEventListener("keyup", (event) => this.Arrows(event));
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.shape.forEach((row, rowIndex) => {
+      row.forEach((cell, columnIndex) => {
+        //square
+        if (cell === 1) {
+          ctx.fillStyle = "orange";
+          const shapeX = this.x + columnIndex;
+          const shapeNewY = this.newY + rowIndex;
+
+          //write the position and "shape" of tetromino in arena(console)
+       
+          //fills the cells by x and y position
+          ctx.fillRect(
+            shapeX * cellSize,
+            shapeNewY * cellSize,
+            cellSize,
+            cellSize
+          );
+        }
+
+        //T
+        if (cell === 2) {
+          ctx.fillStyle = "purple";
+          const shapeX = this.x + columnIndex;
+          const shapeNewY = this.newY + rowIndex;
+        
+          ctx.fillRect(
+            shapeX * cellSize,
+            shapeNewY * cellSize,
+            cellSize,
+            cellSize
+          );
+        }
+
+        //I
+        if (cell === 3) {
+          ctx.fillStyle = "cyan";
+          const shapeX = this.x + columnIndex;
+          const shapeNewY = this.newY + rowIndex;
+       
+          ctx.fillRect(
+            shapeX * cellSize,
+            shapeNewY * cellSize,
+            cellSize,
+            cellSize
+          );
+        }
+
+        //J
+        if (cell === 4) {
+          ctx.fillStyle = "red";
+          const shapeX = this.x + columnIndex;
+          const shapeNewY = this.newY + rowIndex;
+        
+          ctx.fillRect(
+            shapeX * cellSize,
+            shapeNewY * cellSize,
+            cellSize,
+            cellSize
+          );
+        }
+
+        //L
+        if (cell === 5) {
+          ctx.fillStyle = "blue";
+          const shapeX = this.x + columnIndex;
+          const shapeNewY = this.newY + rowIndex;
+        
+          ctx.fillRect(
+            shapeX * cellSize,
+            shapeNewY * cellSize,
+            cellSize,
+            cellSize
+          );
+        }
+
+        //S
+        if (cell === 6) {
+          ctx.fillStyle = "yellow";
+          const shapeX = this.x + columnIndex;
+          const shapeNewY = this.newY + rowIndex;
+        
+          ctx.fillRect(
+            shapeX * cellSize,
+            shapeNewY * cellSize,
+            cellSize,
+            cellSize
+          );
+        }
+
+        //Z
+        if (cell === 7) {
+          ctx.fillStyle = "green";
+          const shapeX = this.x + columnIndex;
+          const shapeNewY = this.newY + rowIndex;
+       
+
+          ctx.fillRect(
+            shapeX * cellSize,
+            shapeNewY * cellSize,
+            cellSize,
+            cellSize
+          );
+        }
+      });
+    });
+  }
 }
 
 //prints array(in console) of some width and height
@@ -348,18 +482,23 @@ function printArray(width, height) {
   return board;
 }
 
-let arena = printArray(40, 55);
+let heightOfArena = 55;
+let widthOfArena = 40;
+
+let arena = printArray(widthOfArena, heightOfArena);
 
 //creates tetromino object
-const run = new DrawTetromino(12, 0, []);
-//gets ID´s from tetrominoShape
-const typesOfTetromino = Object.keys(tetrominoShape);
-//randomize tetromino types
-
-function randomize(){
-const randomizer =
-  typesOfTetromino[Math.floor(Math.random() * typesOfTetromino.length)];
-tetrominoShape[randomizer].forEach((row) => {
-  run.shape.push([...row]);
-});
+function drawShape(run) {
+  run = new DrawTetromino(12, 0, []);
+  const typesOfTetromino = Object.keys(tetrominoShape);
+  const randomizer =
+    typesOfTetromino[Math.floor(Math.random() * typesOfTetromino.length)];
+  tetrominoShape[randomizer].forEach((row) => {
+    run.shape.push([...row]);
+  });
+  run.fall();
 }
+
+//gets ID´s from tetrominoShape
+
+//randomize tetromino types
