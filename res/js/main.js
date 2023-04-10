@@ -1,17 +1,20 @@
-//Canvas
-const canvas = document.getElementById("canvas"); //takes canvas from index.html body
-const ctx = canvas.getContext("2d"); //creates a context(ctx)
-canvas.width = 400; //width of canvas
-canvas.height = 800; //height of canvas
-
+import { tetrominoShape } from "./shape.js";
+import { Tetromino } from "./Tetromino.js";
+import { widthOfArena, heightOfArena } from "./config.js";
 //Tetris problematic/logic
+
+//BUTTONS
 
 //start button
 const start = document.getElementById("start");
+var shapesToRedraw = [];
+let gameStarted = false;
+let run = getTetromino();
 start.onclick = function () {
   soundtrack.play();
+  gameStarted = true;
   //print function fall, from constructor, to website
-  drawShape();
+  runGame();
 };
 
 //restart button
@@ -39,441 +42,10 @@ playButton.onclick = function () {
   }
 };
 
-//size of 1 cell
-cellSize = 15;
+//ARENA
 
-//the speed of falling tetromino
-let speedOftetromino = 1000;
-
-//Declaration of each shape from tetromino
-const tetrominoShape = {
-  //O
-  O: [
-    [1, 1, 0],
-    [1, 1, 0],
-    [0, 0, 0],
-  ],
-
-  //T
-  T: [
-    [2, 2, 2],
-    [0, 2, 0],
-    [0, 0, 0],
-  ],
-
-  //I
-  I: [
-    [0, 3, 0, 0],
-    [0, 3, 0, 0],
-    [0, 3, 0, 0],
-    [0, 3, 0, 0],
-  ],
-
-  //J
-  J: [
-    [4, 4, 4],
-    [0, 0, 4],
-    [0, 0, 0],
-  ],
-
-  //L
-  L: [
-    [5, 5, 5],
-    [5, 0, 0],
-    [0, 0, 0],
-  ],
-
-  //S
-  S: [
-    [0, 6, 6],
-    [6, 6, 0],
-    [0, 0, 0],
-  ],
-
-  //Z
-  Z: [
-    [7, 7, 0],
-    [0, 7, 7],
-    [0, 0, 0],
-  ],
-};
-//creates object with function fall and draw.
-class DrawTetromino {
-  constructor(x, y, shape, canvas) {
-    this.x = x;
-    this.y = y;
-    this.shape = shape;
-    this.canvas = canvas;
-  }
-
-  //method that contorls if button is clicked or released
-  ArrowDown = false;
-
-  //checks input of keys
-  Arrows(event) {
-    switch (event.keyCode) {
-      //left
-      case 37:
-        if (!this.ArrowDown && event.type === "keydown") {
-          this.left();
-          console.log(this.x);
-          this.draw();
-          this.ArrowDown = true;
-        }
-
-        if (this.ArrowDown && event.type === "keyup") {
-          this.ArrowDown = false;
-        }
-        break;
-
-      //right
-      case 39:
-        if (!this.ArrowDown && event.type === "keydown") {
-          this.right();
-          console.log(this.x);
-          this.draw();
-          this.ArrowDown = true;
-        }
-
-        if (this.ArrowDown && event.type === "keyup") {
-          this.ArrowDown = false;
-        }
-        break;
-
-      //down
-      case 40:
-        if (!this.ArrowDown && event.type === "keydown") {
-          this.down();
-          console.log(this.y);
-          this.draw();
-          this.ArrowDown = true;
-        }
-
-        if (this.ArrowDown && event.type === "keyup") {
-          this.ArrowDown = false;
-        }
-        break;
-    }
-  }
-
-  //functions for each arrow key
-
-  //left arrow key
-  left() {
-    this.x -= 1;
-    this.draw();
-  }
-  //right arrow key
-  right() {
-    this.x += 1;
-    this.draw();
-  }
-
-  //down arrow key
-  down() {
-    this.y += 1;
-    this.draw();
-  }
-
-  //makes the tetromino fall
-  fall() {
-    this.draw();
-    this.down();
-    console.log(this.y);
-    this.collisionFall();
-    //sets timeOut and interval for falling
-    setTimeout(() => {
-      this.fall();
-    }, speedOftetromino);
-  }
-
-
-  shapesToRedraw = [];
-  redrawShapes() {
-    this.shapesToRedraw.forEach((shapeToRedraw) => {
-      shapeToRedraw;
-    });
-  }
-
-
-  //collisions
-  collisionFall() {
-    let bottom = 50;
-   
-    if (this.y >= (bottom)) { 
-      this.shape.forEach((row, rowIndex) => {
-        row.forEach((cell, columnIndex) => {
-        if (cell=== 3) {
-          bottom = this.y -4 ;
-          this.y = bottom;
-        }
-       else { 
-          this.y = bottom;
-       } 
-        
-        });});
-        
-  }
-}
-
-  
-  //set y position to zero (resets falling) when its "y">=50
-
-  //draws each type of tetromino
-  draw() {
-    //score
-    let score = document.getElementById("score");
-
-    //event for detection when the key is down.
-    document.addEventListener("keydown", (event) => this.Arrows(event));
-
-    //event for detection when the key is up.
-    document.addEventListener("keyup", (event) => this.Arrows(event));
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    this.shape.forEach((row, rowIndex) => {
-      row.forEach((cell, columnIndex) => {
-        //square
-        if (cell === 1) {
-          ctx.fillStyle = "orange";
-          const shapeX = this.x + columnIndex;
-          const shapeY = this.y + rowIndex;
-
-          //write the position and "shape" of tetromino in arena(console)
-          if (cell != 0) {
-            arena[shapeY][shapeX] = cell;
-          }
-
-          //fills the cells by x and y position
-          ctx.fillRect(
-            shapeX * cellSize,
-            shapeY * cellSize,
-            cellSize,
-            cellSize
-          );
-        }
-
-        //T
-        if (cell === 2) {
-          ctx.fillStyle = "purple";
-          const shapeX = this.x + columnIndex;
-          const shapeY = this.y + rowIndex;
-          if (cell != 0) {
-            arena[shapeY][shapeX] = cell;
-          }
-          ctx.fillRect(
-            shapeX * cellSize,
-            shapeY * cellSize,
-            cellSize,
-            cellSize
-          );
-        }
-
-        //I
-        if (cell === 3) {
-          ctx.fillStyle = "cyan";
-          const shapeX = this.x + columnIndex;
-          const shapeY = this.y + rowIndex;
-          if (cell != 0) {
-            arena[shapeY][shapeX] = cell;
-          }
-          ctx.fillRect(
-            shapeX * cellSize,
-            shapeY * cellSize,
-            cellSize,
-            cellSize
-          );
-        }
-
-        //J
-        if (cell === 4) {
-          ctx.fillStyle = "red";
-          const shapeX = this.x + columnIndex;
-          const shapeY = this.y + rowIndex;
-          if (cell != 0) {
-            arena[shapeY][shapeX] = cell;
-          }
-          ctx.fillRect(
-            shapeX * cellSize,
-            shapeY * cellSize,
-            cellSize,
-            cellSize
-          );
-        }
-
-        //L
-        if (cell === 5) {
-          ctx.fillStyle = "blue";
-          const shapeX = this.x + columnIndex;
-          const shapeY = this.y + rowIndex;
-          if (cell != 0) {
-            arena[shapeY][shapeX] = cell;
-          }
-          ctx.fillRect(
-            shapeX * cellSize,
-            shapeY * cellSize,
-            cellSize,
-            cellSize
-          );
-        }
-
-        //S
-        if (cell === 6) {
-          ctx.fillStyle = "yellow";
-          const shapeX = this.x + columnIndex;
-          const shapeY = this.y + rowIndex;
-          if (cell != 0) {
-            arena[shapeY][shapeX] = cell;
-          }
-          ctx.fillRect(
-            shapeX * cellSize,
-            shapeY * cellSize,
-            cellSize,
-            cellSize
-          );
-        }
-
-        //Z
-        if (cell === 7) {
-          ctx.fillStyle = "green";
-          const shapeX = this.x + columnIndex;
-          const shapeY = this.y + rowIndex;
-          if (cell != 0) {
-            arena[shapeY][shapeX] = cell;
-          }
-
-          ctx.fillRect(
-            shapeX * cellSize,
-            shapeY * cellSize,
-            cellSize,
-            cellSize
-          );
-        }
-      });
-    });
-  }
-  movedown() {
-    //score
-    let score = document.getElementById("score");
-
-    //event for detection when the key is down.
-    document.addEventListener("keydown", (event) => this.Arrows(event));
-
-    //event for detection when the key is up.
-    document.addEventListener("keyup", (event) => this.Arrows(event));
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    this.shape.forEach((row, rowIndex) => {
-      row.forEach((cell, columnIndex) => {
-        //square
-        if (cell === 1) {
-          ctx.fillStyle = "orange";
-          const shapeX = this.x + columnIndex;
-          const shapeNewY = this.newY + rowIndex;
-
-          //write the position and "shape" of tetromino in arena(console)
-       
-          //fills the cells by x and y position
-          ctx.fillRect(
-            shapeX * cellSize,
-            shapeNewY * cellSize,
-            cellSize,
-            cellSize
-          );
-        }
-
-        //T
-        if (cell === 2) {
-          ctx.fillStyle = "purple";
-          const shapeX = this.x + columnIndex;
-          const shapeNewY = this.newY + rowIndex;
-        
-          ctx.fillRect(
-            shapeX * cellSize,
-            shapeNewY * cellSize,
-            cellSize,
-            cellSize
-          );
-        }
-
-        //I
-        if (cell === 3) {
-          ctx.fillStyle = "cyan";
-          const shapeX = this.x + columnIndex;
-          const shapeNewY = this.newY + rowIndex;
-       
-          ctx.fillRect(
-            shapeX * cellSize,
-            shapeNewY * cellSize,
-            cellSize,
-            cellSize
-          );
-        }
-
-        //J
-        if (cell === 4) {
-          ctx.fillStyle = "red";
-          const shapeX = this.x + columnIndex;
-          const shapeNewY = this.newY + rowIndex;
-        
-          ctx.fillRect(
-            shapeX * cellSize,
-            shapeNewY * cellSize,
-            cellSize,
-            cellSize
-          );
-        }
-
-        //L
-        if (cell === 5) {
-          ctx.fillStyle = "blue";
-          const shapeX = this.x + columnIndex;
-          const shapeNewY = this.newY + rowIndex;
-        
-          ctx.fillRect(
-            shapeX * cellSize,
-            shapeNewY * cellSize,
-            cellSize,
-            cellSize
-          );
-        }
-
-        //S
-        if (cell === 6) {
-          ctx.fillStyle = "yellow";
-          const shapeX = this.x + columnIndex;
-          const shapeNewY = this.newY + rowIndex;
-        
-          ctx.fillRect(
-            shapeX * cellSize,
-            shapeNewY * cellSize,
-            cellSize,
-            cellSize
-          );
-        }
-
-        //Z
-        if (cell === 7) {
-          ctx.fillStyle = "green";
-          const shapeX = this.x + columnIndex;
-          const shapeNewY = this.newY + rowIndex;
-       
-
-          ctx.fillRect(
-            shapeX * cellSize,
-            shapeNewY * cellSize,
-            cellSize,
-            cellSize
-          );
-        }
-      });
-    });
-  }
-}
-
-//prints array(in console) of some width and height
 function printArray(width, height) {
-  const board = [];
+  let board = [];
 
   //while height is not 0
   while (height--) {
@@ -481,24 +53,58 @@ function printArray(width, height) {
   }
   return board;
 }
-
-let heightOfArena = 55;
-let widthOfArena = 40;
-
 let arena = printArray(widthOfArena, heightOfArena);
 
-//creates tetromino object
-function drawShape(run) {
-  run = new DrawTetromino(12, 0, []);
+//creates first tetromino object
+function getTetromino() {
+  let run = new Tetromino(12, 0, []);
   const typesOfTetromino = Object.keys(tetrominoShape);
   const randomizer =
     typesOfTetromino[Math.floor(Math.random() * typesOfTetromino.length)];
   tetrominoShape[randomizer].forEach((row) => {
     run.shape.push([...row]);
   });
-  run.fall();
+  return run;
+}
+function runGame() {
+  requestAnimationFrame(runGame);
+
+  if (gameStarted === true) {
+    run.fall();
+    gameStarted = false;
+  }
+
+  if (run.collisionFall()) {
+    shapesToRedraw.push(run);
+    run = getTetromino();
+    run.fall();
+  }
+}
+//runGame();
+
+function redrawShapes() {
+  if (shapesToRedraw !== null) {
+    shapesToRedraw.forEach((shapeToRedraw) => {
+      shapeToRedraw.draw();
+    });
+  }
 }
 
-//gets ID´s from tetrominoShape
+//event for detection when the key is down.
+document.addEventListener("keyup", (e) => {
+  if (e.code === "ArrowDown") {
+    run.down();
+  }
 
-//randomize tetromino types
+  if (e.code === "ArrowLeft") {
+    run.left();
+  }
+
+  if (e.code === "ArrowRight") {
+    run.right();
+    console.table(arena);
+  }
+});
+
+export { arena };
+export { redrawShapes };

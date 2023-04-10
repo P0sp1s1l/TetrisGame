@@ -2,7 +2,7 @@
 body {
   text-align: center;
   font-family: "Press Start 2P";
-  background: url("/TetrisGame/res/img/wallpaper.jpg");
+  background: url("../img/wallpaper.jpg");
 }
 
 p {
@@ -59,7 +59,7 @@ canvas {
 #play {
   width: 80px;
   height: 80px;
-  background: url('/TetrisGame/res/img/imageOfButton.png');
+  background: url("../img/imageOfButton.png");
   background-repeat: no-repeat;
   background-size: 80px;
   font-size: 2px;
@@ -70,7 +70,7 @@ canvas {
 }
 
 #play:hover {
-  background: url('/TetrisGame/res/img/imageOfButtonHover.png');
+  background: url("../img/imageOfButtonHover.png");
   background-repeat: no-repeat;
   background-size: 80px;
 }
