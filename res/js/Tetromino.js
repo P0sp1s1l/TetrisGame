@@ -21,30 +21,31 @@ class Tetromino {
 
   //left arrow keycellSize
   left() {
+    this.collisionLeft();
     this.clear();
     redrawShapes();
-    this.x -= 1;
     this.draw();
   }
   //right arrow key
   right() {
+    this.collisionRight();
     this.clear();
     redrawShapes();
-    this.x += 1;
     this.draw();
   }
 
   //down arrow key
   down() {
+    this.y += 1;
     this.clear();
     redrawShapes();
-    this.y += 1;
     this.draw();
     //console.table(arena);
   }
 
   //makes the tetromino fall
   fall() {
+    console.log(this.x);
     console.log(this.shape);
     if (!this.collisionFall()) {
       this.down();
@@ -66,6 +67,25 @@ class Tetromino {
     }
     return false;
   }
+
+  collisionLeft() {
+    //left side of canvas
+    if (this.x <= 0) {
+      this.y += 0;
+    } else {
+      this.x -= 1;
+    }
+  }
+
+  collisionRight() {
+    //right side of canvas
+    if (this.x >= 24) {
+      this.x += 0;
+    } else {
+      this.x += 1;
+    }
+  }
+
   //clears the canvas
   clear() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -108,6 +128,7 @@ class Tetromino {
         }
 
         //I
+
         if (cell === 3) {
           ctx.fillStyle = "cyan";
           const shapeX = this.x + columnIndex;

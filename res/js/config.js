@@ -4,7 +4,7 @@ const bottom = 53;
 //size of 1 cell
 const cellSize = 15;
 //the speed of falling tetromino
-const speedOftetromino = 1000;
+const speedOftetromino = 100;
 
 const heightOfArena = 55;
 const widthOfArena = 40;
