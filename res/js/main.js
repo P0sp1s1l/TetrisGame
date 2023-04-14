@@ -57,7 +57,7 @@ let arena = printArray(widthOfArena, heightOfArena);
 
 //creates first tetromino object
 function getTetromino() {
-  let run = new Tetromino(12, 0, []);
+  let run = new Tetromino(12, 0, [],true,true);
   const typesOfTetromino = Object.keys(tetrominoShape);
   const randomizer =
     typesOfTetromino[Math.floor(Math.random() * typesOfTetromino.length)];
@@ -93,16 +93,16 @@ function redrawShapes() {
 //event for detection when the key is down.
 document.addEventListener("keyup", (e) => {
   if (e.code === "ArrowDown") {
+    
     run.down();
   }
-
+  
   if (e.code === "ArrowLeft") {
     run.left();
   }
 
   if (e.code === "ArrowRight") {
     run.right();
-    console.table(arena);
   }
 });
 

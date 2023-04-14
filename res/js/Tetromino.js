@@ -9,10 +9,12 @@ import {
 } from "./config.js";
 import { redrawShapes } from "./main.js";
 class Tetromino {
-  constructor(x, y, shape) {
+  constructor(x, y, shape, square, line) {
     this.x = x;
     this.y = y;
     this.shape = shape;
+    this.square = square;
+    this.line = line;
   }
 
   //checks input of keys
@@ -45,8 +47,6 @@ class Tetromino {
 
   //makes the tetromino fall
   fall() {
-    console.log(this.x);
-    console.log(this.shape);
     if (!this.collisionFall()) {
       this.down();
     }
@@ -58,7 +58,8 @@ class Tetromino {
     }, speedOftetromino);
   }
 
-  //collisions
+  //COLLISIONS
+
   collisionFall() {
     //bottom of canvas
     if (this.y + this.shape.length >= 52) {
@@ -80,7 +81,13 @@ class Tetromino {
   collisionRight() {
     //right side of canvas
     if (this.x >= 24) {
-      this.x += 0;
+      if (!this.square) {
+        this.x = 25;
+      } else if (!this.line) {
+        this.x = 26;
+      } else {
+        this.x = 24;
+      }
     } else {
       this.x += 1;
     }
@@ -96,6 +103,7 @@ class Tetromino {
       row.forEach((cell, columnIndex) => {
         //square
         if (cell === 1) {
+          this.square = false;
           ctx.fillStyle = "orange";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
@@ -110,6 +118,7 @@ class Tetromino {
             cellSize,
             cellSize
           );
+          return false;
         }
 
         //T
@@ -130,6 +139,7 @@ class Tetromino {
         //I
 
         if (cell === 3) {
+          this.line = false;
           ctx.fillStyle = "cyan";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
