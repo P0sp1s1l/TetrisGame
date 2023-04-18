@@ -1,15 +1,16 @@
 import { tetrominoShape } from "./shape.js";
 import { Tetromino } from "./Tetromino.js";
 import { widthOfArena, heightOfArena } from "./config.js";
-//Tetris problematic/logic
 
-//BUTTONS
+//LOGIC OF THE GAME
 
-//start button
+let collisionOfBlocks = false; //boolean for collisions between tetromino
 const start = document.getElementById("start");
-var shapesToRedraw = [];
+var shapesToRedraw = []; //array that stores the block that already landed
 let gameStarted = false;
 let run = getTetromino();
+
+//start button
 start.onclick = function () {
   soundtrack.play();
   gameStarted = true;
@@ -27,9 +28,7 @@ restart.onclick = (event) => {
 const soundtrack = document.getElementById("sound"); //get sound from index.html
 const playButton = document.getElementById("play"); //get play from index.html
 
-//click on "speaker" button and it starts to make a sound
 playButton.onclick = function () {
-  //if you pause the sound, the background will change
   if (soundtrack.paused) {
     soundtrack.play();
     playButton.style.background = "url('./img/imageOfButton.png') no-repeat";
@@ -42,10 +41,10 @@ playButton.onclick = function () {
   }
 };
 
-//ARENA
-
+//ARENA (in console)
 function printArray(width, height) {
   let board = [];
+  height -= 2;
 
   //while height is not 0
   while (height--) {
@@ -57,7 +56,7 @@ let arena = printArray(widthOfArena, heightOfArena);
 
 //creates first tetromino object
 function getTetromino() {
-  let run = new Tetromino(12, 0, [],true,true);
+  let run = new Tetromino(12, 0, [], true, true, true);
   const typesOfTetromino = Object.keys(tetrominoShape);
   const randomizer =
     typesOfTetromino[Math.floor(Math.random() * typesOfTetromino.length)];
@@ -66,22 +65,36 @@ function getTetromino() {
   });
   return run;
 }
+
+//starts the game loop
 function runGame() {
   requestAnimationFrame(runGame);
 
+  //checks if the game has started or not
   if (gameStarted === true) {
     run.fall();
     gameStarted = false;
   }
 
+  //collision between shapes
+  if (collisionBetween(run)) {
+    shapesToRedraw.push(run);
+    run.isFalling = false;
+
+    run = getTetromino();
+    run.fall();
+    collisionOfBlocks = false;
+  }
+
+  //collision between shape and bottom
   if (run.collisionFall()) {
     shapesToRedraw.push(run);
     run = getTetromino();
     run.fall();
   }
 }
-//runGame();
 
+//redraws current shape in the new array
 function redrawShapes() {
   if (shapesToRedraw !== null) {
     shapesToRedraw.forEach((shapeToRedraw) => {
@@ -90,13 +103,30 @@ function redrawShapes() {
   }
 }
 
+//function for collision between tetromino shapes
+function collisionBetween(currentShape) {
+  const widthOfShape = currentShape.shape[0].length - 1;
+  if (shapesToRedraw !== null) {
+    shapesToRedraw.forEach((shapeToRedraw) => {
+      if (
+        currentShape.y + currentShape.shape.length >= shapeToRedraw.y &&
+        currentShape.x + widthOfShape >= shapeToRedraw.x &&
+        currentShape.x <= shapeToRedraw.x + shapeToRedraw.shape[0].length - 1
+      ) {
+        collisionOfBlocks = true;
+        return collisionOfBlocks;
+      }
+    });
+  }
+  return collisionOfBlocks;
+}
+
 //event for detection when the key is down.
 document.addEventListener("keyup", (e) => {
   if (e.code === "ArrowDown") {
-    
     run.down();
   }
-  
+
   if (e.code === "ArrowLeft") {
     run.left();
   }
@@ -105,6 +135,11 @@ document.addEventListener("keyup", (e) => {
     run.right();
   }
 });
+
+// updates array in console 
+setInterval(() => {
+  console.table(arena);
+}, 5000);
 
 export { arena };
 export { redrawShapes };

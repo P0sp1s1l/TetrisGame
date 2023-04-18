@@ -9,12 +9,13 @@ import {
 } from "./config.js";
 import { redrawShapes } from "./main.js";
 class Tetromino {
-  constructor(x, y, shape, square, line) {
+  constructor(x, y, shape, square, line, isFalling) {
     this.x = x;
     this.y = y;
     this.shape = shape;
-    this.square = square;
-    this.line = line;
+    this.square = square; //shape square check
+    this.line = line;  //hero square check
+    this.isFalling = isFalling;  //if the shape is falling
   }
 
   //checks input of keys
@@ -42,12 +43,11 @@ class Tetromino {
     this.clear();
     redrawShapes();
     this.draw();
-    //console.table(arena);
   }
 
   //makes the tetromino fall
   fall() {
-    if (!this.collisionFall()) {
+    if (!this.collisionFall() && this.isFalling) {
       this.down();
     }
     //this.collisionFall();
@@ -64,6 +64,7 @@ class Tetromino {
     //bottom of canvas
     if (this.y + this.shape.length >= 52) {
       this.y = bottom - this.shape.length;
+      this.isFalling = false;
       return true;
     }
     return false;
@@ -104,12 +105,12 @@ class Tetromino {
         //square
         if (cell === 1) {
           this.square = false;
-          ctx.fillStyle = "orange";
+          ctx.fillStyle = "#ffa500";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
 
           //write the position and "shape" of tetromino in arena(console)
-          arena[shapeY][shapeX] = cell;
+          if (!this.isFalling) arena[shapeY][shapeX] = cell;
 
           //fills the cells by x and y position
           ctx.fillRect(
@@ -118,15 +119,15 @@ class Tetromino {
             cellSize,
             cellSize
           );
-          return false;
         }
 
         //T
         if (cell === 2) {
-          ctx.fillStyle = "purple";
+          ctx.fillStyle = "#7C2AC9";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
-          arena[shapeY][shapeX] = cell;
+          if (!this.isFalling) arena[shapeY][shapeX] = cell;
+
 
           ctx.fillRect(
             shapeX * cellSize,
@@ -140,10 +141,11 @@ class Tetromino {
 
         if (cell === 3) {
           this.line = false;
-          ctx.fillStyle = "cyan";
+          ctx.fillStyle = "#FFA31A";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
-          arena[shapeY][shapeX] = cell;
+          if (!this.isFalling) arena[shapeY][shapeX] = cell;
+
 
           ctx.fillRect(
             shapeX * cellSize,
@@ -155,10 +157,11 @@ class Tetromino {
 
         //J
         if (cell === 4) {
-          ctx.fillStyle = "red";
+          ctx.fillStyle = "#B51783";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
-          arena[shapeY][shapeX] = cell;
+          if (!this.isFalling) arena[shapeY][shapeX] = cell;
+
 
           ctx.fillRect(
             shapeX * cellSize,
@@ -170,10 +173,11 @@ class Tetromino {
 
         //L
         if (cell === 5) {
-          ctx.fillStyle = "blue";
+          ctx.fillStyle = "#FF0000";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
-          arena[shapeY][shapeX] = cell;
+          if (!this.isFalling) arena[shapeY][shapeX] = cell;
+
 
           ctx.fillRect(
             shapeX * cellSize,
@@ -185,10 +189,11 @@ class Tetromino {
 
         //S
         if (cell === 6) {
-          ctx.fillStyle = "yellow";
+          ctx.fillStyle = "#FFBF00";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
-          arena[shapeY][shapeX] = cell;
+          if (!this.isFalling) arena[shapeY][shapeX] = cell;
+
           ctx.fillRect(
             shapeX * cellSize,
             shapeY * cellSize,
@@ -199,10 +204,11 @@ class Tetromino {
 
         //Z
         if (cell === 7) {
-          ctx.fillStyle = "green";
+          ctx.fillStyle = "#FFBF00";
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
-          arena[shapeY][shapeX] = cell;
+          if (!this.isFalling) arena[shapeY][shapeX] = cell;
+
 
           ctx.fillRect(
             shapeX * cellSize,
