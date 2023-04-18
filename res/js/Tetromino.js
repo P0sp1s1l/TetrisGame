@@ -6,6 +6,13 @@ import {
   speedOftetromino,
   heightOfArena,
   widthOfArena,
+  colorOfSmashBoy,
+  colorOfHero,
+  colorOfEarl,
+  colorOfRicky,
+  colorOfCleevland,
+  colorOfRhodeIsland,
+  colorOfTeewee
 } from "./config.js";
 import { redrawShapes } from "./main.js";
 class Tetromino {
@@ -105,7 +112,7 @@ class Tetromino {
         //square
         if (cell === 1) {
           this.square = false;
-          ctx.fillStyle = "#ffa500";
+          ctx.fillStyle = colorOfSmashBoy;
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
 
@@ -123,7 +130,7 @@ class Tetromino {
 
         //T
         if (cell === 2) {
-          ctx.fillStyle = "#7C2AC9";
+          ctx.fillStyle = colorOfTeewee;
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
           if (!this.isFalling) arena[shapeY][shapeX] = cell;
@@ -141,7 +148,7 @@ class Tetromino {
 
         if (cell === 3) {
           this.line = false;
-          ctx.fillStyle = "#FFA31A";
+          ctx.fillStyle = colorOfHero;
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
           if (!this.isFalling) arena[shapeY][shapeX] = cell;
@@ -157,7 +164,7 @@ class Tetromino {
 
         //J
         if (cell === 4) {
-          ctx.fillStyle = "#B51783";
+          ctx.fillStyle = colorOfRicky;
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
           if (!this.isFalling) arena[shapeY][shapeX] = cell;
@@ -173,7 +180,7 @@ class Tetromino {
 
         //L
         if (cell === 5) {
-          ctx.fillStyle = "#FF0000";
+          ctx.fillStyle = colorOfEarl;
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
           if (!this.isFalling) arena[shapeY][shapeX] = cell;
@@ -189,7 +196,7 @@ class Tetromino {
 
         //S
         if (cell === 6) {
-          ctx.fillStyle = "#FFBF00";
+          ctx.fillStyle = colorOfRhodeIsland;
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
           if (!this.isFalling) arena[shapeY][shapeX] = cell;
@@ -204,7 +211,7 @@ class Tetromino {
 
         //Z
         if (cell === 7) {
-          ctx.fillStyle = "#FFBF00";
+          ctx.fillStyle = colorOfCleevland;
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
           if (!this.isFalling) arena[shapeY][shapeX] = cell;

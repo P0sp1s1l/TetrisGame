@@ -21,28 +21,28 @@ const tetrominoShape = {
     [3],
   ],
 
-  //J - blue ricky
+  //J - ricky
   J: [
     [4, 4, 4],
     [0, 0, 4],
   ],
 
-  //L - red ricky
+  //L - Earl
   L: [
     [5, 5, 5],
     [5, 0, 0],
   ],
 
-  //S - Rhode Island Z
+  //S - Rhode Island 
   S: [
     [0, 6, 6],
     [6, 6, 0],
   ],
 
-  //Z - Cleevland Z 
+  //Z - Cleevland  
   Z: [
     [7, 7, 0],
     [0, 7, 7],
   ],
-};
+}; 
 export { tetrominoShape };
