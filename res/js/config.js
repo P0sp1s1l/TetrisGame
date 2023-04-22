@@ -5,7 +5,7 @@ const bottom = 53;
 const cellSize = 15;
 
 //the speed of falling tetromino
-const speedOftetromino = 50;
+const speedOftetromino = 100;
 
 //height and width of the arena in console.
 const heightOfArena = 55;

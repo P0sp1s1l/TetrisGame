@@ -18,7 +18,9 @@ p {
 }
 canvas {
   position: relative;
-  background: rgb(31, 30, 30);
+  background-image: url("../img/pixel.png");
+  background-repeat: no-repeat;
+  background-size: 111%;
   width: 400px;
   height: 800px;
   border: 2px solid;

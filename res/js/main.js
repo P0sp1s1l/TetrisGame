@@ -121,22 +121,24 @@ function collisionBetween(currentShape) {
   return collisionOfBlocks;
 }
 
-//event for detection when the key is down.
-document.addEventListener("keyup", (e) => {
+let isPressed={};//boolean for check if the arrow key is pressed 
+document.addEventListener("keydown", (e) => {
+  isPressed[e.code] = true; 
+
   if (e.code === "ArrowDown") {
     run.down();
-  }
-
-  if (e.code === "ArrowLeft") {
+  }  if (e.code === "ArrowLeft") {
     run.left();
-  }
-
-  if (e.code === "ArrowRight") {
+  }  if (e.code === "ArrowRight") {
     run.right();
+  }  if (e.code === "ArrowUp") {
+    run.rotate();
   }
 });
-
-// updates array in console 
+document.addEventListener("keyup", (e) => {
+ isPressed[e.code] = false;
+});
+// updates array in console
 setInterval(() => {
   console.table(arena);
 }, 5000);

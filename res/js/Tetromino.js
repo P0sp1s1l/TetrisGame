@@ -14,6 +14,7 @@ import {
   colorOfRhodeIsland,
   colorOfTeewee
 } from "./config.js";
+import { rotateShape } from "./shape.js";
 import { redrawShapes } from "./main.js";
 class Tetromino {
   constructor(x, y, shape, square, line, isFalling) {
@@ -21,8 +22,8 @@ class Tetromino {
     this.y = y;
     this.shape = shape;
     this.square = square; //shape square check
-    this.line = line;  //hero square check
-    this.isFalling = isFalling;  //if the shape is falling
+    this.line = line; //hero square check
+    this.isFalling = isFalling; //if the shape is falling
   }
 
   //checks input of keys
@@ -63,6 +64,13 @@ class Tetromino {
       this.fall();
       redrawShapes();
     }, speedOftetromino);
+  }
+
+  //rotation function
+  rotate() {
+    //for smoother rotating
+    //requestAnimationFrame(rotateShape);
+    this.shape = rotateShape(this.shape);
   }
 
   //COLLISIONS
@@ -135,7 +143,6 @@ class Tetromino {
           const shapeY = this.y + rowIndex;
           if (!this.isFalling) arena[shapeY][shapeX] = cell;
 
-
           ctx.fillRect(
             shapeX * cellSize,
             shapeY * cellSize,
@@ -153,7 +160,6 @@ class Tetromino {
           const shapeY = this.y + rowIndex;
           if (!this.isFalling) arena[shapeY][shapeX] = cell;
 
-
           ctx.fillRect(
             shapeX * cellSize,
             shapeY * cellSize,
@@ -169,7 +175,6 @@ class Tetromino {
           const shapeY = this.y + rowIndex;
           if (!this.isFalling) arena[shapeY][shapeX] = cell;
 
-
           ctx.fillRect(
             shapeX * cellSize,
             shapeY * cellSize,
@@ -184,7 +189,6 @@ class Tetromino {
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
           if (!this.isFalling) arena[shapeY][shapeX] = cell;
-
 
           ctx.fillRect(
             shapeX * cellSize,
@@ -215,7 +219,6 @@ class Tetromino {
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
           if (!this.isFalling) arena[shapeY][shapeX] = cell;
-
 
           ctx.fillRect(
             shapeX * cellSize,
