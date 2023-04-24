@@ -12,25 +12,24 @@ import {
   colorOfRicky,
   colorOfCleevland,
   colorOfRhodeIsland,
-  colorOfTeewee
+  colorOfTeewee,
 } from "./config.js";
 import { rotateShape } from "./shape.js";
 import { redrawShapes } from "./main.js";
 class Tetromino {
-  constructor(x, y, shape, square, line, isFalling) {
+  constructor(x, y, shape, isFalling) {
     this.x = x;
     this.y = y;
     this.shape = shape;
-    this.square = square; //shape square check
-    this.line = line; //hero square check
     this.isFalling = isFalling; //if the shape is falling
+    
   }
 
   //checks input of keys
 
   //functions for each arrow key
 
-  //left arrow keycellSize
+  //left arrow key
   left() {
     this.collisionLeft();
     this.clear();
@@ -58,7 +57,6 @@ class Tetromino {
     if (!this.collisionFall() && this.isFalling) {
       this.down();
     }
-    //this.collisionFall();
     //sets timeOut and interval for falling
     setTimeout(() => {
       this.fall();
@@ -77,7 +75,7 @@ class Tetromino {
 
   collisionFall() {
     //bottom of canvas
-    if (this.y + this.shape.length >= 52) {
+    if (this.y + this.shape.length >= 53) {
       this.y = bottom - this.shape.length;
       this.isFalling = false;
       return true;
@@ -96,14 +94,8 @@ class Tetromino {
 
   collisionRight() {
     //right side of canvas
-    if (this.x >= 24) {
-      if (!this.square) {
-        this.x = 25;
-      } else if (!this.line) {
-        this.x = 26;
-      } else {
-        this.x = 24;
-      }
+    if (this.x + this.shape.length >= 24) {
+     this.x = 24;
     } else {
       this.x += 1;
     }
@@ -119,7 +111,6 @@ class Tetromino {
       row.forEach((cell, columnIndex) => {
         //square
         if (cell === 1) {
-          this.square = false;
           ctx.fillStyle = colorOfSmashBoy;
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;
@@ -154,7 +145,6 @@ class Tetromino {
         //I
 
         if (cell === 3) {
-          this.line = false;
           ctx.fillStyle = colorOfHero;
           const shapeX = this.x + columnIndex;
           const shapeY = this.y + rowIndex;

@@ -16,16 +16,28 @@ p {
   margin-left: 600px;
   margin-top: -770px;
 }
-canvas {
+#canvas {
   position: relative;
-  background-image: url("../img/pixel.png");
-  background-repeat: no-repeat;
+  background-color: rgb(19, 18, 18);
   background-size: 111%;
   width: 400px;
   height: 800px;
   border: 2px solid;
   border-image: linear-gradient(#DE6552, #E6A942,#97B729,#586EC1) 1;
+
 }
+#view{
+  position: absolute;
+  width: 155px;
+  height: 150px;
+  background: rgb(19, 18, 18);
+  border: 2px solid;
+  border-image: linear-gradient(#DE6552, #E6A942,#97B729,#586EC1) 1;
+  margin-left:  2%;
+  margin-top: 10%;
+  size: 20%;
+}
+
 #start {
   font-family: "Press Start 2P";
   background: linear-gradient(#DE6552, #E6A942,#97B729,#586EC1);

@@ -8,8 +8,8 @@ const cellSize = 15;
 const speedOftetromino = 100;
 
 //height and width of the arena in console.
-const heightOfArena = 55;
-const widthOfArena = 40;
+const heightOfArena = 57;
+const widthOfArena =27 ;
 
 //colors of tetromino
 

@@ -5,6 +5,7 @@ import { widthOfArena, heightOfArena } from "./config.js";
 //LOGIC OF THE GAME
 
 let collisionOfBlocks = false; //boolean for collisions between tetromino
+var variation = [];
 const start = document.getElementById("start");
 var shapesToRedraw = []; //array that stores the block that already landed
 let gameStarted = false;
@@ -56,16 +57,16 @@ let arena = printArray(widthOfArena, heightOfArena);
 
 //creates first tetromino object
 function getTetromino() {
-  let run = new Tetromino(12, 0, [], true, true, true);
+  let run = new Tetromino(12, 0, [], true);
   const typesOfTetromino = Object.keys(tetrominoShape);
   const randomizer =
     typesOfTetromino[Math.floor(Math.random() * typesOfTetromino.length)];
+    variation = randomizer
   tetrominoShape[randomizer].forEach((row) => {
     run.shape.push([...row]);
   });
   return run;
 }
-
 //starts the game loop
 function runGame() {
   requestAnimationFrame(runGame);
@@ -105,13 +106,108 @@ function redrawShapes() {
 
 //function for collision between tetromino shapes
 function collisionBetween(currentShape) {
+  
+  if (currentShape.y + currentShape.shape.length <= heightOfArena) {
+  
+    //ok completed
+    if (variation == "O") {
+      if (
+        arena[currentShape.y +currentShape.shape.length][currentShape.x +1] !== 0|| arena[currentShape.y +currentShape.shape.length][currentShape.x ] !== 0) {
+        collisionOfBlocks = true;
+        return collisionOfBlocks;
+      }
+  }
+
+  //ok completed
+  if (variation == "T") {
+    if (
+                   //middle  top and down                                              left side                                  right side
+      arena[currentShape.y +currentShape.shape.length][currentShape.x +1] !== 0|| arena[currentShape.y +2][currentShape.x ] !== 0||arena[currentShape.y +2][currentShape.x+2 ] !== 0) {
+      collisionOfBlocks = true;
+      return collisionOfBlocks;
+    }
+  }
+
+  //ok completed
+  if (variation == "I") {
+    if (
+      arena[currentShape.y + currentShape.shape.length][currentShape.x + 1] !== 0) {
+      collisionOfBlocks = true;
+      return collisionOfBlocks;
+    }
+  }
+
+  
+  if (variation == "J") {
+    if (
+            //middle and top                                           left side                                            right side
+      arena[currentShape.y + 2][currentShape.x + 1] !== 0||arena[currentShape.y + 2][currentShape.x ] !== 0||arena[currentShape.y +currentShape.shape.length ][currentShape.x + 2] !== 0) {
+      collisionOfBlocks = true;
+      return collisionOfBlocks;
+    }
+  }
+
+  
+  if (variation == "L") {
+     if (
+            //middle and top                                           left side                                            right side
+      arena[currentShape.y + 2][currentShape.x + 1] !== 0||arena[currentShape.y + currentShape.shape.length][currentShape.x ] !== 0||arena[currentShape.y+2  ][currentShape.x + 2] !== 0) {
+      collisionOfBlocks = true;
+      return collisionOfBlocks;
+    }
+  }
+
+  
+  if (variation == "S") {
+    if (
+            //middle and top                                                                       left side                                                                right side
+      arena[currentShape.y + currentShape.shape.length][currentShape.x + 1] !== 0||arena[currentShape.y + currentShape.shape.length][currentShape.x ] !== 0||arena[currentShape.y + 2][currentShape.x +2] !== 0) {
+      collisionOfBlocks = true;
+      return collisionOfBlocks;
+    }
+  }
+
+  
+  if (variation == "Z") {
+    if (
+      //middle and top                                                                       left side                                                                right side
+      arena[currentShape.y + currentShape.shape.length][currentShape.x + 1] !== 0||arena[currentShape.y + 2][currentShape.x ] !== 0||arena[currentShape.y + currentShape.shape.length][currentShape.x +2] !== 0) {
+      collisionOfBlocks = true;
+      return collisionOfBlocks;
+    }
+  }
+}
+  //console.log(currentShape.x)
+  //console.log(currentShape.y)
+  // I
+ /* if (currentShape.y + currentShape.shape.length < heightOfArena) {
+    if (
+      arena[currentShape.y + currentShape.shape.length][currentShape.x + 1] !== 0) {
+      console.log(currentShape.y + currentShape.shape.length);
+      collisionOfBlocks = true;
+      //console.log(currentShape.shape.length)
+      //console.log("XXXX")
+      return collisionOfBlocks;
+    }
+    else if (arena[currentShape.y +2 ][currentShape.x ] !== 0 || arena[currentShape.y +2 ][currentShape.x + 1] !== 0 || arena[currentShape.y +2 ][currentShape.x + 2] !== 0 || arena[currentShape.y +2 ][currentShape.x + 3] !== 0) {
+
+      console.log(currentShape.y + currentShape.shape.length);
+      collisionOfBlocks = true;
+      //console.log(currentShape.shape.length)
+      //console.log("XXXX")
+      return collisionOfBlocks;
+    }
+
+  }
+  return collisionOfBlocks;*/
+  /*
   const widthOfShape = currentShape.shape[0].length - 1;
   if (shapesToRedraw !== null) {
     shapesToRedraw.forEach((shapeToRedraw) => {
       if (
         currentShape.y + currentShape.shape.length >= shapeToRedraw.y &&
         currentShape.x + widthOfShape >= shapeToRedraw.x &&
-        currentShape.x <= shapeToRedraw.x + shapeToRedraw.shape[0].length - 1
+        currentShape.x <= shapeToRedraw.x + shapeToRedraw.shape[0].length 
       ) {
         collisionOfBlocks = true;
         return collisionOfBlocks;
@@ -119,29 +215,34 @@ function collisionBetween(currentShape) {
     });
   }
   return collisionOfBlocks;
+  */
 }
 
-let isPressed={};//boolean for check if the arrow key is pressed 
+let isPressed = {}; //boolean for check if the arrow key is pressed
 document.addEventListener("keydown", (e) => {
-  isPressed[e.code] = true; 
+  isPressed[e.code] = true;
 
   if (e.code === "ArrowDown") {
     run.down();
-  }  if (e.code === "ArrowLeft") {
+  }
+  if (e.code === "ArrowLeft") {
     run.left();
-  }  if (e.code === "ArrowRight") {
+  }
+  if (e.code === "ArrowRight") {
     run.right();
-  }  if (e.code === "ArrowUp") {
+  }
+  if (e.code === "ArrowUp") {
     run.rotate();
   }
 });
 document.addEventListener("keyup", (e) => {
- isPressed[e.code] = false;
+  isPressed[e.code] = false;
 });
 // updates array in console
 setInterval(() => {
-  console.table(arena);
+  //console.table(arena);
 }, 5000);
 
 export { arena };
 export { redrawShapes };
+export { getTetromino };

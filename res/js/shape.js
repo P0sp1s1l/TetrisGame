@@ -15,10 +15,10 @@ const tetrominoShape = {
 
   //I - Hero
   I: [
-    [0, 3, 0, 0],
-    [0, 3, 0, 0],
-    [0, 3, 0, 0],
-    [0, 3, 0, 0],
+    [0, 3, 0],
+    [0, 3, 0],
+    [0, 3, 0],
+    [0, 3, 0],
   ],
 
   //J - ricky
@@ -60,6 +60,8 @@ function rotateShape(shape) {
       rotated[i].push(shape[length - j - 1][i]);
     }
   }
+  console.table(rotated)
   return rotated;
+  
 }
 export { tetrominoShape, rotateShape };
