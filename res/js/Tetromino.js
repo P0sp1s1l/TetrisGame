@@ -54,7 +54,7 @@ class Tetromino {
 
   //makes the tetromino fall
   fall() {
-    if (!this.collisionFall() && this.isFalling) {
+    if ( this.isFalling) {
       this.down();
     }
     //sets timeOut and interval for falling
@@ -73,32 +73,15 @@ class Tetromino {
 
   //COLLISIONS
 
-  collisionFall() {
-    //bottom of canvas
-    if (this.y + this.shape.length >= 53) {
-      this.y = bottom - this.shape.length;
-      this.isFalling = false;
-      return true;
-    }
-    return false;
-  }
 
   collisionLeft() {
     //left side of canvas
-    if (this.x <= 0) {
-      this.y += 0;
-    } else {
       this.x -= 1;
-    }
   }
 
   collisionRight() {
     //right side of canvas
-    if (this.x + this.shape.length >= 24) {
-     this.x = 24;
-    } else {
       this.x += 1;
-    }
   }
 
   //clears the canvas

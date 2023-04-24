@@ -1,6 +1,6 @@
 import { tetrominoShape } from "./shape.js";
 import { Tetromino } from "./Tetromino.js";
-import { widthOfArena, heightOfArena } from "./config.js";
+import { widthOfArena, heightOfArena, bottom } from "./config.js";
 
 //LOGIC OF THE GAME
 
@@ -61,7 +61,7 @@ function getTetromino() {
   const typesOfTetromino = Object.keys(tetrominoShape);
   const randomizer =
     typesOfTetromino[Math.floor(Math.random() * typesOfTetromino.length)];
-    variation = randomizer
+  variation = randomizer;
   tetrominoShape[randomizer].forEach((row) => {
     run.shape.push([...row]);
   });
@@ -81,17 +81,9 @@ function runGame() {
   if (collisionBetween(run)) {
     shapesToRedraw.push(run);
     run.isFalling = false;
-
     run = getTetromino();
     run.fall();
     collisionOfBlocks = false;
-  }
-
-  //collision between shape and bottom
-  if (run.collisionFall()) {
-    shapesToRedraw.push(run);
-    run = getTetromino();
-    run.fall();
   }
 }
 
@@ -104,118 +96,55 @@ function redrawShapes() {
   }
 }
 
-//function for collision between tetromino shapes
 function collisionBetween(currentShape) {
-  
-  if (currentShape.y + currentShape.shape.length <= heightOfArena) {
-  
-    //ok completed
+    
+  let  length =  currentShape.shape.length;
+
+  if (currentShape.y + length <= bottom) {
     if (variation == "O") {
-      if (
-        arena[currentShape.y +currentShape.shape.length][currentShape.x +1] !== 0|| arena[currentShape.y +currentShape.shape.length][currentShape.x ] !== 0) {
+      if (currentShape.y + length >= bottom ||arena[currentShape.y + length][currentShape.x + 1] !== 0 || arena[currentShape.y + length][currentShape.x] !== 0) 
+      {
         collisionOfBlocks = true;
-        return collisionOfBlocks;
       }
-  }
+    } 
+    
+    else {
+      for (let i = 0; i < length; i++) {
+        for (let j = 0; j < currentShape.shape[i].length; j++) {
+         
+          if (currentShape.shape[i][j] !== 0) {
+            const x = currentShape.x + j;
+            const y = currentShape.y + i + 1; // increment y by 1
+            
+            if (x < 0 ||x >= widthOfArena ||y < 0 ||y >= bottom ||arena[y][x] !== 0) {
+              collisionOfBlocks = true;
+      
 
-  //ok completed
-  if (variation == "T") {
-    if (
-                   //middle  top and down                                              left side                                  right side
-      arena[currentShape.y +currentShape.shape.length][currentShape.x +1] !== 0|| arena[currentShape.y +2][currentShape.x ] !== 0||arena[currentShape.y +2][currentShape.x+2 ] !== 0) {
-      collisionOfBlocks = true;
-      return collisionOfBlocks;
-    }
-  }
-
-  //ok completed
-  if (variation == "I") {
-    if (
-      arena[currentShape.y + currentShape.shape.length][currentShape.x + 1] !== 0) {
-      collisionOfBlocks = true;
-      return collisionOfBlocks;
-    }
-  }
-
-  
-  if (variation == "J") {
-    if (
-            //middle and top                                           left side                                            right side
-      arena[currentShape.y + 2][currentShape.x + 1] !== 0||arena[currentShape.y + 2][currentShape.x ] !== 0||arena[currentShape.y +currentShape.shape.length ][currentShape.x + 2] !== 0) {
-      collisionOfBlocks = true;
-      return collisionOfBlocks;
-    }
-  }
-
-  
-  if (variation == "L") {
-     if (
-            //middle and top                                           left side                                            right side
-      arena[currentShape.y + 2][currentShape.x + 1] !== 0||arena[currentShape.y + currentShape.shape.length][currentShape.x ] !== 0||arena[currentShape.y+2  ][currentShape.x + 2] !== 0) {
-      collisionOfBlocks = true;
-      return collisionOfBlocks;
-    }
-  }
-
-  
-  if (variation == "S") {
-    if (
-            //middle and top                                                                       left side                                                                right side
-      arena[currentShape.y + currentShape.shape.length][currentShape.x + 1] !== 0||arena[currentShape.y + currentShape.shape.length][currentShape.x ] !== 0||arena[currentShape.y + 2][currentShape.x +2] !== 0) {
-      collisionOfBlocks = true;
-      return collisionOfBlocks;
-    }
-  }
-
-  
-  if (variation == "Z") {
-    if (
-      //middle and top                                                                       left side                                                                right side
-      arena[currentShape.y + currentShape.shape.length][currentShape.x + 1] !== 0||arena[currentShape.y + 2][currentShape.x ] !== 0||arena[currentShape.y + currentShape.shape.length][currentShape.x +2] !== 0) {
-      collisionOfBlocks = true;
-      return collisionOfBlocks;
-    }
-  }
-}
-  //console.log(currentShape.x)
-  //console.log(currentShape.y)
-  // I
- /* if (currentShape.y + currentShape.shape.length < heightOfArena) {
-    if (
-      arena[currentShape.y + currentShape.shape.length][currentShape.x + 1] !== 0) {
-      console.log(currentShape.y + currentShape.shape.length);
-      collisionOfBlocks = true;
-      //console.log(currentShape.shape.length)
-      //console.log("XXXX")
-      return collisionOfBlocks;
-    }
-    else if (arena[currentShape.y +2 ][currentShape.x ] !== 0 || arena[currentShape.y +2 ][currentShape.x + 1] !== 0 || arena[currentShape.y +2 ][currentShape.x + 2] !== 0 || arena[currentShape.y +2 ][currentShape.x + 3] !== 0) {
-
-      console.log(currentShape.y + currentShape.shape.length);
-      collisionOfBlocks = true;
-      //console.log(currentShape.shape.length)
-      //console.log("XXXX")
-      return collisionOfBlocks;
-    }
-
-  }
-  return collisionOfBlocks;*/
-  /*
-  const widthOfShape = currentShape.shape[0].length - 1;
-  if (shapesToRedraw !== null) {
-    shapesToRedraw.forEach((shapeToRedraw) => {
-      if (
-        currentShape.y + currentShape.shape.length >= shapeToRedraw.y &&
-        currentShape.x + widthOfShape >= shapeToRedraw.x &&
-        currentShape.x <= shapeToRedraw.x + shapeToRedraw.shape[0].length 
-      ) {
-        collisionOfBlocks = true;
-        return collisionOfBlocks;
+              // check if the shape colided with bottom of arena 
+              if (currentShape.y + length - 1 == heightOfArena - 1)
+               {
+                currentShape.y -= 1; //move the shape up by 1
+              }
+            }
+          }
+        }
       }
-    });
+    }
+  } else {
+    collisionOfBlocks = true;
   }
+
+  const borderRight = currentShape.x + currentShape.shape[0].length - 1;
+  if (borderRight >= 26) {
+    currentShape.x = 26 - currentShape.shape[0].length;
+  }
+
+  const borderLeft = currentShape.x;
+  if (borderLeft <= 1) {
+    currentShape.x = 1;
+  }
+
   return collisionOfBlocks;
-  */
 }
 
 let isPressed = {}; //boolean for check if the arrow key is pressed

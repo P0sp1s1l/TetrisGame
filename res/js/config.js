@@ -9,7 +9,7 @@ const speedOftetromino = 100;
 
 //height and width of the arena in console.
 const heightOfArena = 57;
-const widthOfArena =27 ;
+const widthOfArena =28 ;
 
 //colors of tetromino
 
