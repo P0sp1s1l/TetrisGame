@@ -13,7 +13,7 @@ p {
 }
 #score {
   position: relative;
-  margin-left: 600px;
+  margin-left: 650px;
   margin-top: -770px;
 }
 #canvas {
@@ -23,19 +23,8 @@ p {
   width: 400px;
   height: 800px;
   border: 2px solid;
-  border-image: linear-gradient(#DE6552, #E6A942,#97B729,#586EC1) 1;
+  border-image: linear-gradient(#DE6552, #E6A942,#E6A942,#97B729,#97B729,#586EC1) 1;
 
-}
-#view{
-  position: absolute;
-  width: 155px;
-  height: 150px;
-  background: rgb(19, 18, 18);
-  border: 2px solid;
-  border-image: linear-gradient(#DE6552, #E6A942,#97B729,#586EC1) 1;
-  margin-left:  2%;
-  margin-top: 10%;
-  size: 20%;
 }
 
 #start {
@@ -46,7 +35,7 @@ p {
   background-color: transparent;
   font-size: 20px;
   position: absolute;
-  margin-left: 22px;
+  margin-left: 37px;
   margin-top: 730px;
   border: 0px solid transparent;
 }
@@ -58,7 +47,7 @@ p {
   background-color: transparent;
   font-size: 20px;
   position: absolute;
-  margin-left: 22px;
+  margin-left: 37px;
   margin-top: 770px;
   border: 0px solid transparent;
 }

@@ -59,7 +59,7 @@ function rotateShape(shape) {
       rotated[i].push(shape[length - j - 1][i]);
     }
   }
-  console.table(rotated)
+  //console.table(rotated)
   return rotated;
   
 }
