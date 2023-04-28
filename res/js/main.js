@@ -16,7 +16,6 @@ let run = getTetromino();
 start.onclick = function () {
   soundtrack.play();
   gameStarted = true;
-  //print function fall, from constructor, to website
   runGame();
 };
 
@@ -97,14 +96,6 @@ function runGame() {
 function redrawShapes() {
   if (shapesToRedraw !== null) {
     shapesToRedraw.forEach((shapeToRedraw) => {
-  
-     /* if (checkArena() !== -1) {
-        //move down shapes above this index (i)
-        let shapeIndex = shapeToRedraw.shape.y
-        if(shapeIndex < checkArena())
-        shapeToRedraw.shape.y = shapeIndex + 1
-      }
-*/
       shapeToRedraw.draw();
     });
   }
@@ -116,11 +107,6 @@ let scoreDefault = 0;
 
 function checkArena() {
   const score = document.getElementById('scoreNumber');
-  //for(let i = 1; i < 26; i++ ){
-    //console.log(arena[52][i]);
-  //}
-  //console.log("-------------------------------------------");
-  //console.log("works");
    for (let i = 0; i < arena.length; i++) {
                              //length of arena is 26 
      for (let index = 1; index < arena[i].length-2; index++) {
@@ -130,7 +116,8 @@ function checkArena() {
        //last index of width
        if (index == arena[i].length - 3) {
         console.log("DELETE ROW: " + i);
-        scoreDefault += 100;
+        arena[i].splice(i,arena[i].length,0) 
+        scoreDefault += 600;
        }
    }
  }
@@ -141,6 +128,29 @@ function checkArena() {
  }
  
  return -1;
+}
+
+function overFunction() {
+  const message = document.createElement("div");
+  soundtrack.pause();
+  message.innerText = `Game Over\nTotal score:${scoreDefault}\n Click to restart.`;
+  message.style.display = "flex";
+  message.style.justifyContent = "center";
+  message.style.alignItems = "center";
+  message.style.backgroundImage = "url(./img/wallpaper.jpg)";
+  message.style.border = "2px solid #E6A942";
+  message.style.fontSize = "30px";
+  message.style.fontWeight = "bold";
+  message.style.color = " #E6A942";
+  message.style.position = "relative";
+  message.style.marginTop = "-120px";
+  message.style.height = "950px";
+  document.body.appendChild(message);
+  // allow user to restart the game by clicking on the message
+  message.onclick = function () {
+    location.reload();
+  };
+  gameIsOver = true;
 }
 
 
@@ -182,24 +192,7 @@ function collisionBetween(currentShape) {
                 cancelAnimationFrame(requestAnimationFrame(runGame));
                 // show game over message if it hasn't been shown before
                 if (!gameIsOver) {
-                  const message = document.createElement("div");
-                  const backg = document.createElement("div");
-                  message.innerText = `Game Over. \nscore:${scoreDefault} \n Click to restart.`;
-                  message.style.textAlign = "center";
-                  message.style.background = "black";
-                  message.style.fontSize = "30px";
-                  message.style.fontWeight = "bold";
-                  message.style.color = " #E6A942";
-                  message.style.position = "absolute";
-                  message.style.marginTop = "200px";
-                  message.style.marginLeft = "600px";
-                  message.style.height = "500px"
-                  document.body.appendChild(message);
-                  // allow user to restart the game by clicking on the message
-                  message.onclick = function () {
-                    location.reload();
-                  };
-                  gameIsOver = true;
+                overFunction();
                 }
               }    
             }
@@ -247,10 +240,6 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keyup", (e) => {
   isPressed[e.code] = false;
 });
-// updates array in console
-setInterval(() => {
-  //console.table(arena);
-}, 5000);
 
 export { arena };
 export { redrawShapes };

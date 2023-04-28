@@ -66,8 +66,6 @@ class Tetromino {
 
   //rotation function
   rotate() {
-    //for smoother rotating
-    //requestAnimationFrame(rotateShape);
     this.shape = rotateShape(this.shape);
   }
 

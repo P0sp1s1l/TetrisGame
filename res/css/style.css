@@ -7,7 +7,7 @@ body {
 
 p {
   font-size: 20px;
-  background: linear-gradient(#DE6552, #E6A942,#97B729,#586EC1);
+  background: linear-gradient(#de6552, #e6a942, #97b729, #586ec1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -23,13 +23,20 @@ p {
   width: 400px;
   height: 800px;
   border: 2px solid;
-  border-image: linear-gradient(#DE6552, #E6A942,#E6A942,#97B729,#97B729,#586EC1) 1;
-
+  border-image: linear-gradient(
+      #de6552,
+      #e6a942,
+      #e6a942,
+      #97b729,
+      #97b729,
+      #586ec1
+    )
+    1;
 }
 
 #start {
   font-family: "Press Start 2P";
-  background: linear-gradient(#DE6552, #E6A942,#97B729,#586EC1);
+  background: linear-gradient(#de6552, #e6a942, #97b729, #586ec1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-color: transparent;
@@ -41,7 +48,7 @@ p {
 }
 #restart {
   font-family: "Press Start 2P";
-  background: linear-gradient(#DE6552, #E6A942,#97B729,#586EC1);
+  background: linear-gradient(#de6552, #e6a942, #97b729, #586ec1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-color: transparent;
@@ -52,8 +59,9 @@ p {
   border: 0px solid transparent;
 }
 
-#start:hover, #restart:hover {
-  background: linear-gradient(#586EC1,#97B729,#E6A942,#DE6552);
+#start:hover,
+#restart:hover {
+  background: linear-gradient(#586ec1, #97b729, #e6a942, #de6552);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -76,4 +84,3 @@ p {
   background-repeat: no-repeat;
   background-size: 80px;
 }
-

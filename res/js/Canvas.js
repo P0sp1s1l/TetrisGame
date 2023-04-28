@@ -4,4 +4,4 @@ const ctx = canvas.getContext("2d"); //creates a context(ctx)
 canvas.width = 405; //width of canvas
 canvas.height = 796; //height of canvas
 
-export {canvas,ctx}
+export { canvas, ctx };
